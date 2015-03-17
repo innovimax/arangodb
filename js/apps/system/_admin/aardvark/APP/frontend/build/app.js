@@ -109813,47 +109813,52 @@ window.ArangoUsers = Backbone.Collection.extend({
       window.progressView = new window.ProgressView();
       var self = this;
 
-      this.arangoDatabase = new window.ArangoDatabase();
-
-      this.currentDB = new window.CurrentDatabase();
-      this.currentDB.fetch({
-        async: false
-      });
-
       this.userCollection = new window.ArangoUsers();
 
-      this.arangoCollectionsStore = new window.arangoCollections();
-      this.arangoDocumentStore = new window.arangoDocument();
-      arangoHelper.setDocumentStore(this.arangoDocumentStore);
+      this.initOnce = function () {
+        this.initOnce = function() {};
+        this.arangoDatabase = new window.ArangoDatabase();
+        this.currentDB = new window.CurrentDatabase();
+        this.currentDB.fetch({
+          async: false
+        });
 
-      this.arangoCollectionsStore.fetch({async: false});
+        this.arangoCollectionsStore = new window.arangoCollections();
+        this.arangoDocumentStore = new window.arangoDocument();
+        arangoHelper.setDocumentStore(this.arangoDocumentStore);
 
-      this.footerView = new window.FooterView();
-      this.notificationList = new window.NotificationCollection();
-      this.naviView = new window.NavigationView({
-        database: this.arangoDatabase,
-        currentDB: this.currentDB,
-        notificationCollection: self.notificationList,
-        userCollection: this.userCollection
-      });
+        this.arangoCollectionsStore.fetch({async: false});
 
-      this.queryCollection = new window.ArangoQueries();
+        this.footerView = new window.FooterView();
+        this.notificationList = new window.NotificationCollection();
+        this.naviView = new window.NavigationView({
+          database: this.arangoDatabase,
+          currentDB: this.currentDB,
+          notificationCollection: self.notificationList,
+          userCollection: this.userCollection
+        });
 
-      this.footerView.render();
-      this.naviView.render();
+        this.queryCollection = new window.ArangoQueries();
+
+        this.footerView.render();
+        this.naviView.render();
+
+        window.checkVersion();
+      }.bind(this);
+
 
       $(window).resize(function () {
         self.handleResize();
       });
-      window.checkVersion();
 
     },
 
     checkUser: function () {
-      if (this.userCollection.activeUser === null) {
+      if (this.userCollection.whoAmI() === null) {
         this.navigate("login", {trigger: true});
         return false;
       }
+      this.initOnce();
       return true;
     },
 
@@ -109905,7 +109910,7 @@ window.ArangoUsers = Backbone.Collection.extend({
     },
 
     login: function () {
-      if (this.userCollection.activeUser !== null) {
+      if (this.userCollection.whoAmI() !== null) {
         this.navigate("", {trigger: true});
         return false;
       }
@@ -109915,7 +109920,6 @@ window.ArangoUsers = Backbone.Collection.extend({
         });
       }
       this.loginView.render();
-      this.naviView.selectMenuItem('');
     },
 
     collections: function () {

@@ -138,7 +138,7 @@ var tutorial = require("org/arangodb/tutorial");
 /// @brief prints help
 ////////////////////////////////////////////////////////////////////////////////
 
-(function() {
+window.initHelp = function() {
   "use strict";
   var internal = require("internal");
   var arangosh = require("org/arangodb/arangosh");
@@ -167,7 +167,7 @@ var tutorial = require("org/arangodb/tutorial");
       }
     }
   }
-}());
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief read rc file

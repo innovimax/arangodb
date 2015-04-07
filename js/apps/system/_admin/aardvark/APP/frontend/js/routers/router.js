@@ -43,6 +43,7 @@
 
       this.initOnce = function () {
         this.initOnce = function() {};
+        window.initHelp();
         this.arangoDatabase = new window.ArangoDatabase();
         this.currentDB = new window.CurrentDatabase();
         this.currentDB.fetch({

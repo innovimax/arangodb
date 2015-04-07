@@ -99624,7 +99624,7 @@ var tutorial = require("org/arangodb/tutorial");
 /// @brief prints help
 ////////////////////////////////////////////////////////////////////////////////
 
-(function() {
+window.initHelp = function() {
   "use strict";
   var internal = require("internal");
   var arangosh = require("org/arangodb/arangosh");
@@ -99653,7 +99653,7 @@ var tutorial = require("org/arangodb/tutorial");
       }
     }
   }
-}());
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief read rc file
@@ -110576,6 +110576,7 @@ window.ArangoUsers = Backbone.Collection.extend({
 
       this.initOnce = function () {
         this.initOnce = function() {};
+        window.initHelp();
         this.arangoDatabase = new window.ArangoDatabase();
         this.currentDB = new window.CurrentDatabase();
         this.currentDB.fetch({

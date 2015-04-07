@@ -6,7 +6,8 @@
   REPLICATION_APPLIER_CONFIGURE, REPLICATION_APPLIER_START, REPLICATION_APPLIER_SHUTDOWN,
   REPLICATION_APPLIER_FORGET, REPLICATION_APPLIER_STATE, REPLICATION_SYNCHRONISE,
   ENABLE_STATISTICS, DISPATCHER_THREADS, SYS_CREATE_NAMED_QUEUE, SYS_ADD_JOB,
-  SYS_RAW_REQUEST_BODY, SYS_REQUEST_PARTS, FE_VERSION_CHECK, SYS_SEND_CHUNK */
+  SYS_RAW_REQUEST_BODY, SYS_REQUEST_PARTS, FE_VERSION_CHECK, SYS_SEND_CHUNK,
+  SYS_CREATE_SID, SYS_CLEAR_SID, SYS_ACCESS_SID */
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief module "internal"
@@ -342,6 +343,33 @@
   if (typeof SYS_SEND_CHUNK !== "undefined") {
     internal.sendChunk = SYS_SEND_CHUNK;
     delete SYS_SEND_CHUNK;
+  }
+
+////////////////////////////////////////////////////////////////////////////////
+/// @brief create sid
+////////////////////////////////////////////////////////////////////////////////
+
+  if (typeof SYS_CREATE_SID !== "undefined") {
+    internal.createSid = SYS_CREATE_SID;
+    delete SYS_CREATE_SID;
+  }
+
+////////////////////////////////////////////////////////////////////////////////
+/// @brief clear sid
+////////////////////////////////////////////////////////////////////////////////
+
+  if (typeof SYS_CLEAR_SID !== "undefined") {
+    internal.clearSid = SYS_CLEAR_SID;
+    delete SYS_CLEAR_SID;
+  }
+
+////////////////////////////////////////////////////////////////////////////////
+/// @brief access sid
+////////////////////////////////////////////////////////////////////////////////
+
+  if (typeof SYS_ACCESS_SID !== "undefined") {
+    internal.accessSid = SYS_ACCESS_SID;
+    delete SYS_ACCESS_SID;
   }
 
 }());
